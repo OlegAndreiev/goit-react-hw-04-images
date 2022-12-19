@@ -31,7 +31,7 @@ export default function App() {
 
   const formSubmitHandler = searchedName => {
     reset();
-    setSearchedName({ searchedName });
+    setSearchedName(searchedName);
   };
 
   const changePagePagination = () => {
@@ -51,52 +51,59 @@ export default function App() {
     }
   };
 
-  // const paginationDataInput = responce => {
-  //   setData(prevData => [...prevData, ...responce.hits]);
-  //   if (responce.total < 12) {
-  //     setNoNewData(true);
-  //   }
-  // };
+  const paginationDataInput = responce => {
+    setData(prevData => [...prevData, ...responce.hits]);
+    if (responce.total < 12) {
+      setNoNewData(true);
+    }
+  };
 
   const toggleModal = ({ showModal }) => {
     setShowModal(!showModal);
   };
 
   const setCurrentImgIdx = idx => {
+    console.log(idx);
     setActiveImgIdx(idx);
   };
 
   useEffect(() => {
-    setLoading(true);
-    fetch(
-      `${BASE_URL}?q=${searchedName}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then(responce => {
-        if (responce.ok) {
-          return responce.json();
-        }
-
-        return Promise.reject(new Error('Something has gone wrong!'));
-      })
-      .catch(error => setError({ error }))
-      .then(data => responceDataInput(data))
-      .finally(() => setLoading(false));
+    if (searchedName !== '') {
+      setLoading(true);
+      fetch(
+        `${BASE_URL}?q=${searchedName}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
+      )
+        .then(responce => {
+          if (responce.ok) {
+            return responce.json();
+          }
+  
+          return Promise.reject(new Error('Something has gone wrong!'));
+        })
+        .catch(error => setError({ error }))
+        .then(data => responceDataInput(data))
+        .finally(() => setLoading(false));
+    }
+    
   }, [searchedName]);
 
   useEffect(() => {
-    setLoading(true);
-    fetch(
-      `${BASE_URL}?q=${searchedName}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then(responce => {
-        if (responce.ok) {
-          return responce.json();
-        }
-        return Promise.reject(new Error('Something has gone wrong!'));
-      })
-      .catch(error => setError({ error }))
-      // .then(data => paginationDataInput(data))
-      .finally(() => setLoading(false));
+    if (searchedName !== '') {
+      setLoading(true);
+      fetch(
+        `${BASE_URL}?q=${searchedName}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
+      )
+        .then(responce => {
+          if (responce.ok) {
+            return responce.json();
+          }
+          return Promise.reject(new Error('Something has gone wrong!'));
+        })
+        .catch(error => setError({ error }))
+        .then(data => paginationDataInput(data))
+        .finally(() => setLoading(false));
+    }
+   
   }, [page]);
 
   return (
