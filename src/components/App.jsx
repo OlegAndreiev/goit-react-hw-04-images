@@ -18,7 +18,7 @@ export default function App() {
   const [noData, setNoData] = useState(false);
   const [noNewData, setNoNewData] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState('');
+  // const [id, setId] = useState('');
   const [activeImgIdx, setActiveImgIdx] = useState(null);
   const BASE_URL = 'https://pixabay.com/api/';
   const API_KEY = '30800366-aecfdce11bab1e79da5c222a8';
@@ -58,7 +58,7 @@ export default function App() {
     }
   };
 
-  const toggleModal = ({ showModal }) => {
+  const toggleModal = () => {
     setShowModal(!showModal);
   };
 

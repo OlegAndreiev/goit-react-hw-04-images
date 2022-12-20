@@ -4,20 +4,29 @@ import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import css from './ImageGallery.module.css';
 
 export default function ImageGallery({ data, error, showModal, activeIdx }) {
+//  const providerValue=(()=>{return ({showModal, activeIdx})})
   return (
     <div>
       {error && <h1>{error.message}</h1>}
       {data && (
         <ul className={css.ImageGallery}>
           {data.map((el, idx) => (
-            <ImageGalleryItem
-              key={el.id}
-              webformatURL={el.webformatURL}
-              tags={el.tags}
-              showModal={showModal}
-              idx={idx}
-              activeIdx={activeIdx}
-            />
+             <ImageGalleryItem
+             key={el.id}
+             webformatURL={el.webformatURL}
+             tags={el.tags}
+             showModal={showModal}
+             idx={idx}
+             activeIdx={activeIdx}
+           />
+            // <ImageGalleryItem.Provider value={providerValue}
+            //   key={el.id}
+            //   webformatURL={el.webformatURL}
+            //   tags={el.tags}
+            //   showModal={showModal}
+            //   idx={idx}
+            //   activeIdx={activeIdx}
+            // />
           ))}
         </ul>
       )}
